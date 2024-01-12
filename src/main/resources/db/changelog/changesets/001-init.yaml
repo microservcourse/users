@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-1
+      author: gk
+      changes:
+        - createIndex:
+            tableName: users
+            indexName: ix_users_phone_number
+            columns:
+              - column:
+                  name: phone_number
+        - createIndex:
+            tableName: user_skills
+            indexName: ix_user_skills_user_id
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            tableName: subscription
+            indexName: ix_subscription_subscriber_id
+            columns:
+              - column:
+                  name: subscriber_id

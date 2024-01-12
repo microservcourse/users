@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - changeSet:
+      id: 000-1
+      author: gk
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: first_name
+                  type: varchar(255)
+              - column:
+                  name: last_name
+                  type: varchar(255)
+              - column:
+                  name: middle_name
+                  type: varchar(255)
+              - column:
+                  name: gender
+                  type: varchar(255)
+              - column:
+                  name: date_of_birth
+                  type: DATE
+              - column:
+                  name: city
+                  type: varchar(255)
+              - column:
+                  name: avatar_url
+                  type: varchar(2048)
+              - column:
+                  name: about_me
+                  type: varchar(2048)
+              - column:
+                  name: nickname
+                  type: varchar(255)
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: phone_number
+                  type: varchar(64)
+              - column:
+                  name: creation_date
+                  type: timestamp
+                  defaultValueComputed: current_timestamp
+              - column:
+                  name: is_deleted
+                  type: boolean
+                  defaultValueBoolean: false
+        - createTable:
+            tableName: skills
+            columns:
+              - column:
+                  name: skill_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: skill_name
+                  type: varchar(255)
+        - createTable:
+            tableName: user_skills
+            columns:
+              - column:
+                  name: user_skill_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    references: users(user_id)
+                    foreignKeyName: fk_user_skills_user
+              - column:
+                  name: skill_id
+                  type: bigint
+                  constraints:
+                    references: skills(skill_id)
+                    foreignKeyName: fk_user_skills_skills
+        - createTable:
+            tableName: subscription
+            columns:
+              - column:
+                  name: subscription_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: subscriber_id
+                  type: bigint
+                  constraints:
+                    references: users(user_id)
+                    foreignKeyName: fk_subscription_user
+              - column:
+                  name: target_user_id
+                  type: bigint
+                  constraints:
+                    references: users(user_id)
+                    foreignKeyName: fk_subscription_target
+              - column:
+                  name: creation_date
+                  type: timestamp
+                  defaultValueComputed: current_timestamp
+

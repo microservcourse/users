@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  postgres:
+    restart: unless-stopped
+    image: postgres:11
+    container_name: users-postgres-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=users
+    ports:
+      - 5432:5432
+    networks:
+      - my_network
+
+  users:
+    build: .
+    restart: unless-stopped
+    container_name: users-service
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/users
+    ports:
+      - 8081:8081
+    depends_on:
+      - postgres
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
